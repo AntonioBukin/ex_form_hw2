@@ -5,7 +5,33 @@ import MyBooksBlock from "./MyBooksBlock/MyBooksBlock";
 import styles from "./my-books.module.scss";
 
 class MyBook extends Component {
+    state = {
+        items: [
+            {
+                id: "1",
+                title: "Worm",
+                author: "John C. McCrae"
+            },
+            {
+                id: "2",
+                title: "Ward",
+                author: "John C. McCrae"
+            },
+        ],
+        title: "",
+        author: "",
+        filter: "",
+
+    }
     render() {
+        const { items } = this.state;
+
+        const elements = items.map(({id, title, author }) => (
+            <li className={styles.listItem} key={id}>
+                Title: {title}. Author: {author}. <button>delete</button>
+            </li>
+        ))
+
         return (
             <div className={styles.wrapper}>
                 <h3 className={styles.title}>My Books</h3>
@@ -26,12 +52,7 @@ class MyBook extends Component {
                     <MyBooksBlock title="Book list">
                         <input className={styles.textField} placeholder="enter book or author" />
                         <ol className={styles.list}>
-                            <li className={styles.listItem}>
-                                Title: Worm. Author: Джон Маккрей. <button>delete</button>
-                            </li>
-                            <li className={styles.listItem}>
-                                Title: Ward. Author: Джон Маккрей. <button>delete</button>
-                            </li>
+                            {elements}
                         </ol>
                     </MyBooksBlock>
                 </div>
