@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { nanoid } from "nanoid";
 
 import MyBooksBlock from "./MyBooksBlock/MyBooksBlock";
 
@@ -30,12 +31,25 @@ class MyBook extends Component {
         })
         //console.log(name);
         //console.log(value);
-
-
     }
 
+        handleSubmit = (e) => {
+            e.preventDefault();
+            this.setState(prevState => {
+                const {title, author, items} = prevState;
+                const newBook = {
+                    id: nanoid(),
+                    title, 
+                    author,
+                }
+
+                return {items: [...items, newBook], title: "", author: ""}
+            })
+        }
+    
+
     render() {
-        const { items } = this.state;
+        const { title, author, items } = this.state;
 
         const elements = items.map(({id, title, author }) => (
             <li className={styles.listItem} key={id}>
@@ -48,14 +62,14 @@ class MyBook extends Component {
                 <h3 className={styles.title}>My Books</h3>
                 <div className={styles.block}>
                     <MyBooksBlock title="Add new book">
-                        <form className={styles.form}>
+                        <form onSubmit={this.handleSubmit} className={styles.form}>
                             <div className={styles.formGroup}>
                                 <label>Book title</label>
-                                <input name="title" onChange={this.handleChange} className={styles.textField} placeholder="Book title"/>
+                                <input value={title} name="title" onChange={this.handleChange} className={styles.textField} placeholder="Book title"/>
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Book author</label>
-                                <input name="author" onChange={this.handleChange} className={styles.textField} placeholder="Book author"/>
+                                <input value={author} name="author" onChange={this.handleChange} className={styles.textField} placeholder="Book author"/>
                             </div>
                             <button type="submit">Add book</button>
                         </form>
