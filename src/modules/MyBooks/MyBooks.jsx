@@ -35,6 +35,12 @@ class MyBook extends Component {
 
         handleSubmit = (e) => {
             e.preventDefault();
+            if(this.isDublicate()) {
+                const {title, author} = this.state;
+                alert (`${title} - ${author} is already exist`);
+                return;
+            }
+
             this.setState(prevState => {
                 const {title, author, items} = prevState;
                 const newBook = {
@@ -45,6 +51,32 @@ class MyBook extends Component {
 
                 return {items: [...items, newBook], title: "", author: ""}
             })
+            this.reset();
+        }
+
+        reset() {
+            this.setState({title: "", author: ""})
+        }
+
+        onDeleteBook(id) {
+            this.setState(prevState => {
+                const newItems = prevState.items.filter(item => item.id !== id);
+                return {
+                    items: newItems,
+                }
+            })
+
+        }
+
+        isDublicate() {
+            const {title, author, items} = this.state;
+            const normalizedTitle = title.toLowerCase();
+            const normalizedAuthor = author.toLowerCase();
+            const dublicate = items.find(item => {
+                return (item.title.toLowerCase() === normalizedTitle && item.author.toLowerCase() === normalizedAuthor)
+            });
+
+            return Boolean(dublicate);
         }
     
 
@@ -53,7 +85,7 @@ class MyBook extends Component {
 
         const elements = items.map(({id, title, author }) => (
             <li className={styles.listItem} key={id}>
-                Title: {title}. Author: {author}. <button>delete</button>
+                Title: {title}. Author: {author}. <button onClick={() => this.onDeleteBook(id)}>delete</button>
             </li>
         ))
 
