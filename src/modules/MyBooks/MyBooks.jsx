@@ -21,8 +21,19 @@ class MyBook extends Component {
         title: "",
         author: "",
         filter: "",
+    }
+
+    handleChange = ({target}) => {
+        const {name, value} = target;
+        this.setState({
+            [name]: value
+        })
+        //console.log(name);
+        //console.log(value);
+
 
     }
+
     render() {
         const { items } = this.state;
 
@@ -40,11 +51,11 @@ class MyBook extends Component {
                         <form className={styles.form}>
                             <div className={styles.formGroup}>
                                 <label>Book title</label>
-                                <input className={styles.textField} placeholder="Book title"/>
+                                <input name="title" onChange={this.handleChange} className={styles.textField} placeholder="Book title"/>
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Book author</label>
-                                <input className={styles.textField} placeholder="Book author"/>
+                                <input name="author" onChange={this.handleChange} className={styles.textField} placeholder="Book author"/>
                             </div>
                             <button type="submit">Add book</button>
                         </form>
