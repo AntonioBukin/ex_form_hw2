@@ -81,6 +81,9 @@ class MyBook extends Component {
 
         getFilteredBooks(){
             const {filter, items} = this.state;
+            if(!filter) {
+                return items;
+            }
             const normalizedFilter = filter.toLowerCase();
             const result = items.filter(({title, author}) => {
                 return (title.toLowerCase().includes(normalizedFilter) || author.toLowerCase().includes(normalizedFilter))
