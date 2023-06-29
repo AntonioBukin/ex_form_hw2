@@ -78,10 +78,22 @@ class MyBook extends Component {
 
             return Boolean(dublicate);
         }
+
+        getFilteredBooks(){
+            const {filter, items} = this.state;
+            const normalizedFilter = filter.toLowerCase();
+            const result = items.filter(({title, author}) => {
+                return (title.toLowerCase().includes(normalizedFilter) || author.toLowerCase().includes(normalizedFilter))
+            })
+
+            return result;
+        }
     
 
     render() {
-        const { title, author, items } = this.state;
+        const { title, author } = this.state;
+
+        const items = this.getFilteredBooks();
 
         const elements = items.map(({id, title, author }) => (
             <li className={styles.listItem} key={id}>
@@ -107,7 +119,7 @@ class MyBook extends Component {
                         </form>
                     </MyBooksBlock>
                     <MyBooksBlock title="Book list">
-                        <input className={styles.textField} placeholder="enter book or author" />
+                        <input name="filter" onChange={this.handleChange} className={styles.textField} placeholder="enter book or author" />
                         <ol className={styles.list}>
                             {elements}
                         </ol>
