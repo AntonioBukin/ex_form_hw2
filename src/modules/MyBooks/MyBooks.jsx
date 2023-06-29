@@ -8,16 +8,16 @@ import styles from "./my-books.module.scss";
 class MyBook extends Component {
     state = {
         items: [
-            {
-                id: "1",
-                title: "Worm",
-                author: "John C. McCrae"
-            },
-            {
-                id: "2",
-                title: "Ward",
-                author: "John C. McCrae"
-            },
+            // {
+            //     id: "1",
+            //     title: "Worm",
+            //     author: "John C. McCrae"
+            // },
+            // {
+            //     id: "2",
+            //     title: "Ward",
+            //     author: "John C. McCrae"
+            // },
         ],
         title: "",
         author: "",
